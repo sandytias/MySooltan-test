@@ -14,6 +14,7 @@ export default function Home() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [search, setSearch] = useState('')
+  const [result, setResult] = useState([])
 
   const onSearch = (e) => {
     e.preventDefault()
@@ -23,6 +24,7 @@ export default function Home() {
       .then(res => res.json())
       .then(data => {
         const users = data.items
+        setResult(users)
       }).finally(() => {
         setIsLoading(false)
       })
@@ -30,7 +32,7 @@ export default function Home() {
   }
 
   return (
-    <div className='space-y-5'>
+    <div className='space-y-5 py-10'>
       <Head>
         <title>Cari Orang Github</title>
       </Head>
@@ -39,7 +41,7 @@ export default function Home() {
         <Form value={search} onChange={(e) => setSearch(e.target.value)} />
         <Button type='submit' isLoading={isLoading} />
       </form>
-       <UserList /> 
+       <UserList result={result} /> 
     </div>
   )
 }
